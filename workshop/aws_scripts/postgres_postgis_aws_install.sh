@@ -95,6 +95,9 @@ sudo apt-get install -y mdadm xfsprogs
 devices=$(perl -e 'for$i("h".."k"){for$j("",1..15){print"/dev/sd$i$j\n"}}'|
 head -$volumes)
 
+# If many EBS volumes ( e.g. 8) are allocated, it is possible that one or more drives are still being provisoned ( e.g. shown as "attaching" at AWS console  )
+read -p "Please check AWS Console for EBS readiness, then hit the Enter key to start mdadm --create ..."
+
 #builds out RAID10
 yes | sudo mdadm \
 --create $raid_array_location \
